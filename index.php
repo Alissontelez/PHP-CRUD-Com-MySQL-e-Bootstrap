@@ -19,9 +19,8 @@
         
         <div class="container">
         <?php 
-            $mysqli = new mysqli('localhost', 'root', '', 'crud') or die(mysqli_error($mysqli));
-            $result = $mysqli->query("SELECT * FROM data") or die($mysqli->error);
-            //pre_r($result);
+            $mysqli = mysqli_connect('localhost', 'root', '', 'crud') or die(mysqli_error($mysqli));
+            $record = $mysqli->query("SELECT * FROM data") or die($mysqli->error);
             ?>
             
         <div class=" row justify-content-center">
@@ -33,7 +32,7 @@
                         <th colspan="2">Ação</th>
                     </tr>
                 </thead>
-                <?php while ($row = $result->fetch_assoc()): ?>
+                <?php while ($row = $record->fetch_assoc()): ?>
                 <tr>
                     <td><?php echo $row['name']; ?></td>
                     <td><?php echo $row['location']; ?></td>
@@ -48,11 +47,7 @@
             </table>
         </div>
         <?php    
-            function pre_r($array) {
-                echo '<pre>';
-                print_r($array);
-                echo '</pre>';       
-            }           
+
         ?>
         
         <div class="row justify-content-center">
@@ -69,10 +64,10 @@
                    value="<?php echo $location ?>" placeholder="Insira sua localização">
             </div>
             <div class="form-group">
-            <?php if ($update == true): ?>
-                <button type="submit" class="btn btn-primary" name="update">Atualizar</button>
-            <?php else: ?>
+            <?php if ($edit_state == false): ?>
                 <button type="submit" class="btn btn-primary" name="save">Salvar</button>
+            <?php else: ?>               
+                <button type="submit" class="btn btn-primary" name="update">Atualizar</button>
             <?php endif; ?>
             </div>
         </form>
